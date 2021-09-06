@@ -1,6 +1,6 @@
 default:
-	cd cmd/cb-myfw && $(MAKE)
+	cd cmd/cb-mcas && $(MAKE)
 run:
-	cd cmd/cb-myfw && $(MAKE) run
+	cd cmd/cb-mcas && $(MAKE) run
 clean:
-	cd cmd/cb-myfw && $(MAKE) clean
+	cd cmd/cb-mcas && $(MAKE) clean
