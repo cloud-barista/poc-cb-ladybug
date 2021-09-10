@@ -38,17 +38,7 @@ type (
 		Status        string     `json:"status"`
 		Uid           string     `json:"uid"`
 	}
-
-	Mcks struct {
-		Model
-	}
 )
-
-func NewMcks(namespace string) *Mcks {
-	return &Mcks{
-		Model: Model{namespace: namespace},
-	}
-}
 
 func (self *Mcks) CreateCluster(req McksClusterReq) (*McksCluster, error) {
 	var resp McksCluster

@@ -14,10 +14,21 @@ import (
 	logger "github.com/sirupsen/logrus"
 )
 
-type McksStatus struct {
-	Code    int    `json:"code"`
-	Kind    string `json:"kind"`
-	Message string `json:"message"`
+type (
+	McksStatus struct {
+		Code    int    `json:"code"`
+		Kind    string `json:"kind"`
+		Message string `json:"message"`
+	}
+	Mcks struct {
+		Model
+	}
+)
+
+func NewMcks(namespace string) *Mcks {
+	return &Mcks{
+		Model: Model{namespace: namespace},
+	}
 }
 
 type Model struct {
