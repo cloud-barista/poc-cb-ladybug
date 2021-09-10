@@ -1,10 +1,15 @@
 package chartmuseum
 
 import (
+	"encoding/json"
 	"errors"
+	"net/http"
 	"strings"
 
 	"github.com/chartmuseum/helm-push/pkg/helm"
+	"github.com/cloud-barista/cb-mcas/pkg/utils/app"
+
+	logger "github.com/sirupsen/logrus"
 )
 
 // Chartmuseum's Chart
@@ -27,6 +32,63 @@ type CmMaintainer struct {
 	Name  string `json:"name"`
 	Email string `json:"email"`
 }
+
+type CmError struct {
+	Error string `json:"error"`
+}
+
+type Model struct {
+	repoName string
+}
+
+func (self *Model) execute(method string, url string, body interface{}, result interface{}) (bool, error) {
+	/*
+		// validation
+		if err := self.validate(validation.Validation{}); err != nil {
+			return false, err
+		}
+	*/
+	resp, err := app.ExecuteHTTP(method, url, body, result)
+	if err != nil {
+		return false, err
+	}
+
+	// response check
+	if resp.StatusCode() > 300 && resp.StatusCode() != http.StatusNotFound {
+		logger.Warnf("Chartmuseum: statusCode=%d, url=%s, body=%s", resp.StatusCode(), resp.Request.URL, resp)
+		return false, errors.New("Unknown error")
+	}
+
+	if method == http.MethodGet && resp.StatusCode() == http.StatusNotFound {
+		logger.Infof("Not found data (status=404, method=%s, url=%s)", method, url)
+		return false, nil
+	}
+
+	if method == http.MethodPost && resp.StatusCode() != http.StatusCreated {
+		er := CmError{}
+		err := json.Unmarshal(resp.Body(), &er)
+		if err != nil || er.Error == "" {
+			logger.Warnf("Chartmuseum: statusCode=%d, url=%s, body=%s", resp.StatusCode(), resp.Request.URL, resp)
+			return false, errors.New("Unknown error")
+		}
+		return false, errors.New(er.Error)
+	}
+
+	return true, nil
+}
+
+/*
+func (self *Model) validate(valid validation.Validation) error {
+	valid.Required(self.repoName, "repoName")
+	//valid.Required(self.Name, "name")
+	if valid.HasErrors() {
+		for _, err := range valid.Errors {
+			return errors.New(fmt.Sprintf("[%s]%s", err.Key, err.Error()))
+		}
+	}
+	return nil
+}
+*/
 
 func getRepoUrl(repoName string) (string, error) {
 	if repoName == "" {
