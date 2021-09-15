@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	logger "github.com/sirupsen/logrus"
+	logrus "github.com/sirupsen/logrus"
 )
 
 type (
@@ -87,7 +87,7 @@ func (self *Mcks) DeleteCluster(clusterName string) (*McksStatus, error) {
 			return nil, err
 		}
 	} else {
-		logger.Infof("Cannot delete the cluster (namespace=%s, name=%s, cause=not found)",
+		logrus.Infof("Cannot delete the cluster (namespace=%s, name=%s, cause=not found)",
 			self.namespace, clusterName)
 	}
 

@@ -11,7 +11,7 @@ import (
 	"github.com/cloud-barista/cb-mcas/pkg/utils/config"
 	"github.com/go-resty/resty/v2"
 
-	logger "github.com/sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 type (
@@ -49,7 +49,7 @@ func (self *Model) execute(method string, url string, body interface{}, result i
 
 	// response check
 	if resp.StatusCode() > 300 && resp.StatusCode() != http.StatusNotFound {
-		logger.Warnf("MCKS: statusCode=%d, url=%s, body=%s", resp.StatusCode(), resp.Request.URL, resp)
+		logrus.Warnf("MCKS: statusCode=%d, url=%s, body=%s", resp.StatusCode(), resp.Request.URL, resp)
 		status := McksStatus{}
 		json.Unmarshal(resp.Body(), &status)
 		/*
@@ -62,7 +62,7 @@ func (self *Model) execute(method string, url string, body interface{}, result i
 	}
 
 	if method == http.MethodGet && resp.StatusCode() == http.StatusNotFound {
-		logger.Infof("Not found data (status=404, method=%s, url=%s)", method, url)
+		logrus.Infof("Not found data (status=404, method=%s, url=%s)", method, url)
 		return false, nil
 	}
 
