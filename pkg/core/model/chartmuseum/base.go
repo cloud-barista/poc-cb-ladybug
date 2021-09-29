@@ -37,7 +37,7 @@ type CmError struct {
 }
 
 type Model struct {
-	repoName string
+	RepoName string
 }
 
 func (self *Model) execute(method string, url string, body interface{}, result interface{}) (bool, error) {

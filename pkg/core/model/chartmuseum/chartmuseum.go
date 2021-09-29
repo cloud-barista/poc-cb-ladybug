@@ -3,7 +3,6 @@ package chartmuseum
 import (
 	"fmt"
 	"net/http"
-	"os"
 )
 
 type Chartmuseum struct {
@@ -12,14 +11,20 @@ type Chartmuseum struct {
 
 func NewChartmuseum(repoName string) *Chartmuseum {
 	return &Chartmuseum{
-		Model: Model{repoName: repoName},
+		Model: Model{RepoName: repoName},
 	}
 }
+
+/*
+func (self *Chartmuseum) GetRepo() string {
+	return self.RepoName
+}
+*/
 
 func (self *Chartmuseum) GetAllCharts() (*map[string][]CmChart, error) {
 	var resp map[string][]CmChart
 
-	repoUrl, err := getRepoUrl(self.repoName)
+	repoUrl, err := getRepoUrl(self.RepoName)
 	if err != nil {
 		return nil, err
 	}
@@ -39,10 +44,10 @@ func (self *Chartmuseum) GetAllCharts() (*map[string][]CmChart, error) {
 	return &resp, nil
 }
 
-func (self *Chartmuseum) GetAllVersionsOfChart(chartName string) (*[]CmChart, error) {
+func (self *Chartmuseum) GetChartAllVersions(chartName string) (*[]CmChart, error) {
 	var resp []CmChart
 
-	repoUrl, err := getRepoUrl(self.repoName)
+	repoUrl, err := getRepoUrl(self.RepoName)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +70,7 @@ func (self *Chartmuseum) GetAllVersionsOfChart(chartName string) (*[]CmChart, er
 func (self *Chartmuseum) GetChart(chartName, version string) (*CmChart, error) {
 	var resp CmChart
 
-	repoUrl, err := getRepoUrl(self.repoName)
+	repoUrl, err := getRepoUrl(self.RepoName)
 	if err != nil {
 		return nil, err
 	}
@@ -86,42 +91,12 @@ func (self *Chartmuseum) GetChart(chartName, version string) (*CmChart, error) {
 
 }
 
-func (self *Chartmuseum) UploadChart(pkgPath string) error {
-	bytesPkg, err := os.ReadFile(pkgPath)
+func (self *Chartmuseum) UploadChart(bytesPkg []byte) error {
+	repoUrl, err := getRepoUrl(self.RepoName)
 	if err != nil {
 		return err
 	}
 
-	repoUrl, err := getRepoUrl(self.repoName)
-	if err != nil {
-		return err
-	}
-	/*
-		conf := config.Config
-
-		req := resty.New().SetDisableWarn(true).R().SetBasicAuth(*conf.Username, *conf.Password)
-		req.SetBody(bytesPkg)
-		req.SetContentLength(true)
-
-		// execute
-		resp, err := req.Execute(
-			http.MethodPost,
-			fmt.Sprintf("%s/api/charts", repoUrl))
-		if err != nil {
-			return err
-		}
-	*/
-	/*
-		resp, err := app.ExecuteHTTP(
-			http.MethodPost,
-			fmt.Sprintf("%s/api/charts", repoUrl),
-			bytesPkg, nil)
-		if err != nil {
-			return err
-		}
-
-		return handlePushResponse(resp.RawResponse)
-	*/
 	_, err = self.execute(
 		http.MethodPost,
 		fmt.Sprintf("%s/api/charts", repoUrl),
@@ -134,7 +109,7 @@ func (self *Chartmuseum) UploadChart(pkgPath string) error {
 }
 
 func (self *Chartmuseum) DeleteChart(chartName, version string) error {
-	repoUrl, err := getRepoUrl(self.repoName)
+	repoUrl, err := getRepoUrl(self.RepoName)
 	if err != nil {
 		return err
 	}
