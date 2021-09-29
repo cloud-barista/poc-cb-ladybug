@@ -1,6 +1,6 @@
 default:
-	cd cmd/cb-mcas && $(MAKE)
+	cd cmd/cb-ladybug && $(MAKE)
 run:
-	cd cmd/cb-mcas && $(MAKE) run
+	cd cmd/cb-ladybug && $(MAKE) run
 clean:
-	cd cmd/cb-mcas && $(MAKE) clean
+	cd cmd/cb-ladybug && $(MAKE) clean
