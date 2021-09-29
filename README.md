@@ -1,22 +1,86 @@
-# cb-fw-template
-Template for a new Cloud-Barista framework
+# CB-Ladybug :beetle:
+> Multi-Cloud Application Management Framework
 
-### 개요
-`cb-fw-template` 는 개발자가 Cloud-Barista 프레임워크를 새로 만들 때 활용할 수 있는 소스코드 템플릿입니다.
+[![Go Report Card](https://goreportcard.com/badge/github.com/cloud-barista/poc-cb-ladybug)](https://goreportcard.com/report/github.com/cloud-barista/poc-cb-ladybug)
+[![Build](https://img.shields.io/github/workflow/status/cloud-barista/poc-cb-ladybug/Build%20amd64%20container%20image)](https://github.com/cloud-barista/poc-cb-ladybug/actions?query=workflow%3A%22Build+amd64+container+image%22)
+[![Top Language](https://img.shields.io/github/languages/top/cloud-barista/poc-cb-ladybug)](https://github.com/cloud-barista/poc-cb-ladybug/search?l=go)
+[![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/cloud-barista/poc-cb-ladybug?label=go.mod)](https://github.com/cloud-barista/poc-cb-ladybug/blob/master/go.mod)
+[![Repo Size](https://img.shields.io/github/repo-size/cloud-barista/poc-cb-ladybug)](#)
+[![GoDoc](https://godoc.org/github.com/cloud-barista/poc-cb-ladybug?status.svg)](https://pkg.go.dev/github.com/cloud-barista/poc-cb-ladybug@master)
+[![Release Version](https://img.shields.io/github/v/release/cloud-barista/poc-cb-ladybug?color=blue)](https://github.com/cloud-barista/poc-cb-ladybug/releases/latest)
+[![License](https://img.shields.io/github/license/cloud-barista/poc-cb-ladybug?color=blue)](https://github.com/cloud-barista/poc-cb-ladybug/blob/master/LICENSE)
 
-### 사용법
-[Repo 메인 페이지](https://github.com/cloud-barista/cb-fw-template)에 있는 "Use this template" 버튼을 누르고
-본인의 계정 (예: `jihoon-seo`) 아래에 
-새로운 repo (예: `jihoon-seo/cb-cat`) 를 만듭니다.
+```
+[NOTE]
+CB-Ladybug is currently under development. (the latest release is none) 
+So, we do not recommend using the current release in production.
+Please note that the functionalities of CB-Ladybug are not stable and secure yet.
+If you have any difficulties in using CB-Ladybug, please let us know.
+(Open an issue or Join the cloud-barista Slack)
+```
 
-이후, 필요에 따라
-`pkg/apiserver/apiserver.go` 에 REST API 엔드포인트를 추가하고
-`pkg/common/resource.go` 에 REST API 처리 함수를 작성하고
-적절한 위치에 코어 로직 코드를 작성하면 됩니다.
+## Getting started
 
-### 소스 트리 설명
-- `cmd/cb-myfw`: 
-  이 repo에서는 소스 컴파일 결과 `cb-myfw` 라는 바이너리 파일이 생성된다고 가정합니다. 
-  이 repo에서 `cb-myfw` 라고 되어 있는 부분들을 당신이 원하는 이름 (예: `cb-cat`) 으로 바꾸시면 됩니다.
-- `pkg/`: REST API 서버, 코어 로직 등 프레임워크의 주요 코드가 위치하는 디렉토리입니다.
-- `test/`: REST API 호출을 통해 프레임워크를 테스트 해 볼 수 있는 셸 스크립트가 있습니다.
+### Preparation
+
+* Golang 1.16.+ ([Download and install](https://golang.org/doc/install))
+
+### Dependencies
+
+* CB-MCKS [v0.4.3](https://github.com/cloud-barista/cb-mcks/releases/tag/v0.4.3)
+* CB-Tumblebug [v0.4.7](https://github.com/cloud-barista/cb-tumblebug/releases/tag/v0.4.7)
+* CB-Spider [v0.4.10](https://github.com/cloud-barista/cb-spider/releases/tag/v0.4.10)
+
+
+### Clone
+
+```
+$ git clone https://github.com/cloud-barista/poc-cb-ladybug.git
+$ cd poc-cb-ladybug
+$ go get -v all
+```
+
+### Run 
+
+```
+$ export CBLOG_ROOT="$(pwd)"
+$ export CBSTORE_ROOT="$(pwd)"
+$ go run cmd/cb-ladybug/main.go
+```
+
+### Build and Execute
+
+```
+$ go build -o cb-ladybug cmd/cb-ladybug/main.go
+```
+
+```
+$ export CBLOG_ROOT="$(pwd)"
+$ export CBSTORE_ROOT="$(pwd)"
+$ nohup ./cb-ladybug & > /dev/null
+```
+
+### Test
+
+```
+$ ./scripts/get-health.sh
+
+[INFO]
+- Ladybug URL is 'http://localhost:1592/ladybug'
+
+------------------------------------------------------------------------------
+cloud-barista cb-ladybug is alived
+```
+
+### API documentation
+
+* Under construction
+
+## Documents
+
+* Under construction
+
+
+## Contribution
+Learn how to start contribution on the [Contributing Guideline](https://github.com/cloud-barista/docs/tree/master/contributing) and [Style Guideline](https://github.com/cloud-barista/poc-cb-ladybug/blob/master/STYLE_GUIDE.md)
+
