@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	MCKS_STATUS_COMPLETED = "completed"
+	MCKS_CLUSTER_STATUS_COMPLETED = "completed"
 )
 
 var (
@@ -36,7 +36,7 @@ func TestCreateGetCluster(t *testing.T) {
 		t.Fatalf("Mcks.CreateCluster error - cause=%v : %s", err, lang.GetFuncName())
 	}
 
-	if cluster.Status != MCKS_STATUS_COMPLETED {
+	if cluster.Status != MCKS_CLUSTER_STATUS_COMPLETED {
 		mcks.DeleteCluster(clusterName)
 		t.Fatalf("The cluster creation is not completed - cause=%v : %s", err, lang.GetFuncName())
 	}

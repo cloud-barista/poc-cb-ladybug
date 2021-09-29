@@ -11,8 +11,12 @@ import (
 	"github.com/cloud-barista/cb-mcas/pkg/utils/app"
 	"github.com/cloud-barista/cb-mcas/pkg/utils/config"
 	"github.com/go-resty/resty/v2"
+)
 
-	"github.com/sirupsen/logrus"
+const (
+	MCKS_STATUS_UNKNOWN   = 0
+	MCKS_STATUS_SUCCESS   = 1
+	MCKS_STATUS_NOT_EXIST = 404
 )
 
 type (
