@@ -3,8 +3,6 @@ package mcks
 import (
 	"fmt"
 	"net/http"
-
-	logrus "github.com/sirupsen/logrus"
 )
 
 type (
@@ -71,12 +69,12 @@ func (self *Mcks) CreateCluster(req McksClusterReq) (*McksCluster, error) {
 	return &resp, nil
 }
 
-func (self *Mcks) GetCluster(clusterName string) (*McksCluster, error) {
+func (self *Mcks) GetCluster(name string) (*McksCluster, error) {
 	var resp McksCluster
 
 	found, err := self.execute(
 		http.MethodGet,
-		fmt.Sprintf("/ns/%s/clusters/%s", self.namespace, clusterName),
+		fmt.Sprintf("/ns/%s/clusters/%s", self.namespace, name),
 		nil, &resp)
 	if err != nil {
 		return nil, err
@@ -89,25 +87,28 @@ func (self *Mcks) GetCluster(clusterName string) (*McksCluster, error) {
 	return &resp, nil
 }
 
-func (self *Mcks) DeleteCluster(clusterName string) (*McksStatus, error) {
+func (self *Mcks) DeleteCluster(name string) (*McksStatus, error) {
 	var status McksStatus
 
-	cluster, err := self.GetCluster(clusterName)
+	/*
+			cluster, err := self.GetCluster(name)
+			if err != nil {
+				return nil, err
+			}
+		if cluster != nil {
+	*/
+	_, err := self.execute(
+		http.MethodDelete,
+		fmt.Sprintf("/ns/%s/clusters/%s", self.namespace, name),
+		nil, &status)
 	if err != nil {
 		return nil, err
 	}
-	if cluster != nil {
-		_, err := self.execute(
-			http.MethodDelete,
-			fmt.Sprintf("/ns/%s/clusters/%s", self.namespace, clusterName),
-			nil, &status)
-		if err != nil {
-			return nil, err
+	/*
+		} else {
+			common.CBLog.Infof("MCKS: cannot delete the cluster (namespace=%s, name=%s, cause=not found)",
+				self.namespace, name)
 		}
-	} else {
-		logrus.Infof("Cannot delete the cluster (namespace=%s, name=%s, cause=not found)",
-			self.namespace, clusterName)
-	}
-
+	*/
 	return &status, nil
 }
