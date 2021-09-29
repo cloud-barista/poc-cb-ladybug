@@ -38,7 +38,25 @@ type (
 		Status        string     `json:"status"`
 		Uid           string     `json:"uid"`
 	}
+
+	McksClusterList struct {
+		Kind  string        `json:"kind"`
+		Items []McksCluster `json:"items"`
+	}
 )
+
+func (self *Mcks) ListCluster() (*McksClusterList, error) {
+	var resp McksClusterList
+
+	_, err := self.execute(
+		http.MethodGet,
+		fmt.Sprintf("/ns/%s/clusters", self.namespace),
+		nil, &resp)
+	if err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
 
 func (self *Mcks) CreateCluster(req McksClusterReq) (*McksCluster, error) {
 	var resp McksCluster
