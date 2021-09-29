@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/chartmuseum/helm-push/pkg/helm"
+	"github.com/cloud-barista/cb-mcas/pkg/core/common"
 	"github.com/cloud-barista/cb-mcas/pkg/utils/app"
-	"github.com/sirupsen/logrus"
 )
 
 // Chartmuseum's Chart
@@ -53,24 +53,24 @@ func (self *Model) execute(method string, url string, body interface{}, result i
 	}
 
 	// response check
-	if resp.StatusCode() > 300 && resp.StatusCode() != http.StatusNotFound {
-		logrus.Warnf("Chartmuseum: statusCode=%d, url=%s, body=%s", resp.StatusCode(), resp.Request.URL, resp)
-		return false, errors.New("Unknown error")
-	}
-
-	if method == http.MethodGet && resp.StatusCode() == http.StatusNotFound {
-		logrus.Infof("Not found data (status=404, method=%s, url=%s)", method, url)
-		return false, nil
-	}
-
 	if method == http.MethodPost && resp.StatusCode() != http.StatusCreated {
 		er := CmError{}
 		err := json.Unmarshal(resp.Body(), &er)
 		if err != nil || er.Error == "" {
-			logrus.Warnf("Chartmuseum: statusCode=%d, url=%s, body=%s", resp.StatusCode(), resp.Request.URL, resp)
+			common.CBLog.Warnf("Chartmuseum: statusCode=%d, url=%s, body=%s", resp.StatusCode(), resp.Request.URL, resp)
 			return false, errors.New("Unknown error")
 		}
 		return false, errors.New(er.Error)
+	}
+
+	if resp.StatusCode() > 300 && resp.StatusCode() != http.StatusNotFound {
+		common.CBLog.Warnf("Chartmuseum: statusCode=%d, url=%s, body=%s", resp.StatusCode(), resp.Request.URL, resp)
+		return false, errors.New("Unknown error")
+	}
+
+	if method == http.MethodGet && resp.StatusCode() == http.StatusNotFound {
+		common.CBLog.Infof("Not found data (status=404, method=%s, url=%s)", method, url)
+		return false, nil
 	}
 
 	return true, nil

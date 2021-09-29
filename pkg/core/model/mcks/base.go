@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/beego/beego/v2/core/validation"
+	"github.com/cloud-barista/cb-mcas/pkg/core/common"
 	"github.com/cloud-barista/cb-mcas/pkg/utils/app"
 	"github.com/cloud-barista/cb-mcas/pkg/utils/config"
 	"github.com/go-resty/resty/v2"
@@ -49,7 +50,7 @@ func (self *Model) execute(method string, url string, body interface{}, result i
 
 	// response check
 	if resp.StatusCode() > 300 && resp.StatusCode() != http.StatusNotFound {
-		logrus.Warnf("MCKS: statusCode=%d, url=%s, body=%s", resp.StatusCode(), resp.Request.URL, resp)
+		common.CBLog.Warnf("MCKS: statusCode=%d, url=%s, body=%s", resp.StatusCode(), resp.Request.URL, resp)
 		status := McksStatus{}
 		json.Unmarshal(resp.Body(), &status)
 		/*
@@ -62,7 +63,7 @@ func (self *Model) execute(method string, url string, body interface{}, result i
 	}
 
 	if method == http.MethodGet && resp.StatusCode() == http.StatusNotFound {
-		logrus.Infof("Not found data (status=404, method=%s, url=%s)", method, url)
+		common.CBLog.Infof("MCKS: not found data (status=404, method=%s, url=%s)", method, url)
 		return false, nil
 	}
 
