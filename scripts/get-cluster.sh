@@ -1,7 +1,7 @@
 #!/bin/bash
 # -----------------------------------------------------------------
 # usage
-if [ "$#" -lt 2 ]; then 
+if [ "$#" -lt 1 ]; then 
 	echo "./get-cluster.sh <namespace> <cluster name>"
 	echo "./get-cluster.sh lb-ns my-cluster"
 	exit 0; 

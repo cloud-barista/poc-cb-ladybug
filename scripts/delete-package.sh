@@ -1,7 +1,7 @@
 #!/bin/bash
 # -----------------------------------------------------------------
 # usage
-if [ "$#" -lt 2 ]; then 
+if [ "$#" -lt 1 ]; then 
 	echo "./delete-package.sh <namespace> <package name> <package version>"
 	echo "./delete-package.sh lb-ns my-package 1.0.0"
 	exit 0; 
