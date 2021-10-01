@@ -2,7 +2,7 @@
 # -----------------------------------------------------------------
 # usage
 if [ "$#" -lt 1 ]; then 
-	echo "./create-cluster.sh <namespace> <clsuter name>"
+	echo "./create-cluster.sh <namespace> <cluster name>"
 	echo "./create-cluster.sh lb-ns my-cluster"
 	exit 0; 
 fi
@@ -68,7 +68,7 @@ create_cluster() {
 			],
 			"worker": [
 				{
-					"connection": "config-aws-ap-northeast-1",
+					"connection": "config-aws-ap-northeast-2",
 					"count": 1,
 					"spec": "t2.small"
 				},
