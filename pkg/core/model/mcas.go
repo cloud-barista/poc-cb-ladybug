@@ -9,15 +9,17 @@ import (
 	"github.com/cloud-barista/cb-mcas/pkg/utils/lang"
 )
 
+type McasStatus string
+
 const (
-	STATUS_MCAS_ENABLED  = "enabled"
-	STATUS_MCAS_DISABLED = "disabled"
+	STATUS_MCAS_ENABLED  = McasStatus("enabled")
+	STATUS_MCAS_DISABLED = McasStatus("disabled")
 )
 
 type Mcas struct {
 	Model
 	Namespace string
-	Status    string
+	Status    McasStatus
 }
 
 func NewMcas(namespace string) *Mcas {
@@ -27,21 +29,24 @@ func NewMcas(namespace string) *Mcas {
 	}
 }
 
+/*
 func (self *Mcas) Init() error {
 	return self.Enable()
 }
-
-func (self *Mcas) GetStatus() (string, error) {
+*/
+func (self *Mcas) GetStatus() (McasStatus, error) {
 	key := lang.GetStoreMcasKey(self.Namespace)
 	keyValue, err := common.CBStore.Get(key)
 	if err != nil {
-		return "", err
+		return McasStatus(""), err
 	}
 	if keyValue == nil {
-		return "", errors.New(fmt.Sprintf("%s not found", key))
+		return McasStatus(""), errors.New(fmt.Sprintf("%s not found", key))
 	}
 
 	json.Unmarshal([]byte(keyValue.Value), &self)
+
+	common.CBLog.Debugf("key=%s, value=%s", key, self)
 	return self.Status, nil
 }
 

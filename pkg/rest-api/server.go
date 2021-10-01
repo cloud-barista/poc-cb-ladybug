@@ -82,7 +82,9 @@ func RunServer() {
 	g := e.Group(*config.Config.LadybugBasePath+"/ns", common.NsValidate())
 
 	// Routes
+	g.POST("/:namespace/mcas", router.EnableMcas)
 	g.GET("/:namespace/mcas", router.GetMcas)
+	g.DELETE("/:namespace/mcas", router.DisableMcas)
 
 	g.POST("/:namespace/packages", router.UploadPackage)
 	g.GET("/:namespace/packages", router.ListPackage)
