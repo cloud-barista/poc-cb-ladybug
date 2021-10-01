@@ -1,7 +1,7 @@
 #!/bin/bash
 # -----------------------------------------------------------------
 # usage
-if [ "$#" -lt 2 ]; then 
+if [ "$#" -lt 1 ]; then 
 	echo "./upload-package.sh <namespace> <package file>"
 	echo "./upload-package.sh lb-ns my-package-1.0.0.tgz"
 	exit 0; 
@@ -23,6 +23,7 @@ if [ "${v_NAMESPACE}" == "" ]; then
 fi
 if [ "${v_NAMESPACE}" == "" ]; then echo "[ERROR] missing <namespace>"; exit -1; fi
 
+# 2. package file
 if [ "$#" -gt 1 ]; then v_PACKAGE_FILE="$2"; else	v_PACKAGE_FILE="${PACKAGE_FILE}"; fi
 if [ "${v_PACKAGE_FILE}" == "" ]; then 
 	read -e -p "Package file ? : " v_PACKAGE_FILE
