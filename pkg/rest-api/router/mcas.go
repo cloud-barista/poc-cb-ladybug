@@ -18,7 +18,7 @@ func GetMcas(c echo.Context) error {
 		return app.SendMessage(c, http.StatusBadRequest, err.Error())
 	}
 
-	return app.Send(c, http.StatusOK, string(status))
+	return app.Send(c, http.StatusOK, status)
 }
 
 func EnableMcas(c echo.Context) error {
