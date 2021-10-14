@@ -9,19 +9,19 @@ import (
 )
 
 type conf struct {
-	RunMode              *string
-	AppRootPath          *string
-	LadybugListenAddress *string
-	LadybugBasePath      *string
-	SpiderCallMethod     *string
-	TumblebugCallMethod  *string
-	McksCallMethod       *string
-	SpiderUrl            *string
-	TumblebugUrl         *string
-	McksUrl              *string
-	Username             *string
-	Password             *string
-	LoglevelHTTP         *bool
+	RunMode             *string
+	AppRootPath         *string
+	ListenAddress       *string
+	BasePath            *string
+	SpiderCallMethod    *string
+	TumblebugCallMethod *string
+	McksCallMethod      *string
+	SpiderUrl           *string
+	TumblebugUrl        *string
+	McksUrl             *string
+	Username            *string
+	Password            *string
+	LoglevelHTTP        *bool
 }
 
 var Config = &conf{}
@@ -31,8 +31,8 @@ func Setup() {
 	//	var logLevel *string
 
 	Config.AppRootPath = flag.String("app-root", lang.NVL(os.Getenv("APP_ROOT"), ""), "application root path")
-	Config.LadybugListenAddress = flag.String("ladybug-listen-address", lang.NVL(os.Getenv("LADYBUG_LISTEN_ADDRESS"), ":1592"), "ladybug listen address(IP:port)")
-	Config.LadybugBasePath = flag.String("ladybug-base-path", lang.NVL(os.Getenv("LADYBUG_BASE_PATH"), "/ladybug"), "ladybug base path")
+	Config.ListenAddress = flag.String("listen-address", lang.NVL(os.Getenv("LISTEN_ADDRESS"), ":1592"), "ladybug listen address(IP:port)")
+	Config.BasePath = flag.String("base-path", lang.NVL(os.Getenv("BASE_PATH"), "/ladybug"), "ladybug base path")
 	Config.SpiderCallMethod = flag.String("spider-call-method", lang.NVL(os.Getenv("SPIDER_CALL_METHOD"), "REST"), "Method of calling CB-Spider (REST/gRPC)")
 	Config.TumblebugCallMethod = flag.String("tumblebug-call-method", lang.NVL(os.Getenv("TUMBLEBUG_CALL_METHOD"), "REST"), "Method of calling CB-Tumblebug (REST/gRPC)")
 	Config.McksCallMethod = flag.String("mcks-call-method", lang.NVL(os.Getenv("MCKS_CALL_METHOD"), "REST"), "Method of calling CB-MCKS(REST/gRPC)")
@@ -68,8 +68,8 @@ func Setup() {
 	}
 
 	common.CBLog.Infof("app-root: ", *Config.AppRootPath)
-	common.CBLog.Infof("ladybug-listen-address: ", *Config.LadybugListenAddress)
-	common.CBLog.Infof("ladybug-base-path: ", *Config.LadybugBasePath)
+	common.CBLog.Infof("listen-address: ", *Config.ListenAddress)
+	common.CBLog.Infof("base-path: ", *Config.BasePath)
 	common.CBLog.Infof("spder-call-method: ", *Config.SpiderCallMethod)
 	common.CBLog.Infof("tumblebug-call-method: ", *Config.TumblebugCallMethod)
 	common.CBLog.Infof("mcks-call-method: ", *Config.McksCallMethod)
