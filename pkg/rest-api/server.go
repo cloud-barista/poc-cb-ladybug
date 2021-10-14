@@ -77,9 +77,9 @@ func RunServer() {
 
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
-	e.GET(*config.Config.LadybugBasePath+"/health", router.Health)
+	e.GET(*config.Config.BasePath+"/health", router.Health)
 
-	g := e.Group(*config.Config.LadybugBasePath+"/ns", common.NsValidate())
+	g := e.Group(*config.Config.BasePath+"/ns", common.NsValidate())
 
 	// Routes
 	g.POST("/:namespace/mcas", router.EnableMcas)
@@ -98,5 +98,5 @@ func RunServer() {
 	g.DELETE("/:namespace/clusters/:cluster", router.DeleteCluster)
 
 	// Start server
-	e.Logger.Fatal(e.Start(*cfg.Config.LadybugListenAddress))
+	e.Logger.Fatal(e.Start(*cfg.Config.ListenAddress))
 }
