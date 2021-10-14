@@ -5,7 +5,6 @@ import (
 
 	"github.com/cloud-barista/cb-mcas/pkg/core/common"
 	"github.com/cloud-barista/cb-mcas/pkg/core/service"
-	"github.com/cloud-barista/cb-mcas/pkg/utils/app"
 	"github.com/labstack/echo/v4"
 )
 
@@ -15,10 +14,10 @@ func GetMcas(c echo.Context) error {
 	status, err := service.GetMcas(c.Param("namespace"))
 	if err != nil {
 		common.CBLog.Error(err)
-		return app.SendMessage(c, http.StatusBadRequest, err.Error())
+		return SendMessage(c, http.StatusBadRequest, err.Error())
 	}
 
-	return app.Send(c, http.StatusOK, status)
+	return Send(c, http.StatusOK, status)
 }
 
 func EnableMcas(c echo.Context) error {
@@ -27,10 +26,10 @@ func EnableMcas(c echo.Context) error {
 	err := service.EnableMcas(c.Param("namespace"))
 	if err != nil {
 		common.CBLog.Error(err)
-		return app.SendMessage(c, http.StatusBadRequest, err.Error())
+		return SendMessage(c, http.StatusBadRequest, err.Error())
 	}
 
-	return app.Send(c, http.StatusOK, nil)
+	return Send(c, http.StatusOK, nil)
 }
 
 func DisableMcas(c echo.Context) error {
@@ -39,8 +38,8 @@ func DisableMcas(c echo.Context) error {
 	err := service.DisableMcas(c.Param("namespace"))
 	if err != nil {
 		common.CBLog.Error(err)
-		return app.SendMessage(c, http.StatusBadRequest, err.Error())
+		return SendMessage(c, http.StatusBadRequest, err.Error())
 	}
 
-	return app.Send(c, http.StatusOK, nil)
+	return Send(c, http.StatusOK, nil)
 }

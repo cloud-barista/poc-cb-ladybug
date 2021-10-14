@@ -8,7 +8,7 @@ import (
 
 	"github.com/chartmuseum/helm-push/pkg/helm"
 	"github.com/cloud-barista/cb-mcas/pkg/core/common"
-	"github.com/cloud-barista/cb-mcas/pkg/utils/app"
+	"github.com/cloud-barista/cb-mcas/pkg/utils/client"
 )
 
 // Chartmuseum's Chart
@@ -47,7 +47,7 @@ func (self *Model) execute(method string, url string, body interface{}, result i
 			return false, err
 		}
 	*/
-	resp, err := app.ExecuteHTTP(method, url, body, result)
+	resp, err := client.ExecuteHTTP(method, url, body, result)
 	if err != nil {
 		return false, err
 	}

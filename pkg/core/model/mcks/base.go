@@ -8,7 +8,7 @@ import (
 
 	"github.com/beego/beego/v2/core/validation"
 	"github.com/cloud-barista/cb-mcas/pkg/core/common"
-	"github.com/cloud-barista/cb-mcas/pkg/utils/app"
+	"github.com/cloud-barista/cb-mcas/pkg/utils/client"
 	"github.com/cloud-barista/cb-mcas/pkg/utils/config"
 	"github.com/go-resty/resty/v2"
 )
@@ -47,7 +47,7 @@ func (self *Model) execute(method string, url string, body interface{}, result i
 		return false, err
 	}
 
-	resp, err := app.ExecuteHTTP(method, *config.Config.McksUrl+url, body, result)
+	resp, err := client.ExecuteHTTP(method, *config.Config.McksUrl+url, body, result)
 	if err != nil {
 		return false, err
 	}
