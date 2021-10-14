@@ -1,4 +1,4 @@
-package app
+package client
 
 import (
 	"github.com/cloud-barista/cb-mcas/pkg/utils/config"
