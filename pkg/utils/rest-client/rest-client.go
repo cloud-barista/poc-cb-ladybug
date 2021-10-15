@@ -1,4 +1,4 @@
-package client
+package restclient
 
 import (
 	"github.com/cloud-barista/cb-mcas/pkg/utils/config"
