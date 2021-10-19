@@ -7,10 +7,6 @@ import (
 	"github.com/cloud-barista/cb-mcas/pkg/utils/lang"
 )
 
-const (
-	MCKS_CLUSTER_STATUS_COMPLETED = "completed"
-)
-
 var (
 	namespace   string = "namespace-1"
 	clusterName string = "cluster-1"

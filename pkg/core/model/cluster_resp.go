@@ -17,7 +17,7 @@ type (
 		Spec     string `json:"spec"`
 	}
 
-	Cluster struct {
+	ClusterResp struct {
 		Model
 		Namespace string `json:"namespace"`
 		Mcis      string `json:"mcis"`
@@ -29,10 +29,10 @@ type (
 		mcks.McksClusterReq
 	}
 
-	ClusterList struct {
+	ClusterRespList struct {
 		ListModel
-		Namespace string    `json:"namespace"`
-		Items     []Cluster `json:"items"`
+		Namespace string        `json:"namespace"`
+		Items     []ClusterResp `json:"items"`
 	}
 )
 
@@ -46,34 +46,34 @@ func NewNode(name, publicIp, csp, role, spec string) *Node {
 	}
 }
 
-func NewCluster(namespace, name string) *Cluster {
-	return &Cluster{
-		Model:     Model{Kind: KIND_CLUSTER, Name: name},
+func NewClusterResp(namespace, name string) *ClusterResp {
+	return &ClusterResp{
+		Model:     Model{Kind: KIND_CLUSTER_RESP, Name: name},
 		Namespace: namespace,
 	}
 }
 
-func (self *Cluster) SetMcis(mcis string) {
+func (self *ClusterResp) SetMcis(mcis string) {
 	self.Mcis = mcis
 }
 
-func (self *Cluster) AddNode(node *Node) {
+func (self *ClusterResp) AddNode(node *Node) {
 	self.Nodes = append(self.Nodes, *node)
 }
 
-func (self *Cluster) SetStatus(status string) {
+func (self *ClusterResp) SetStatus(status string) {
 	self.Status = status
 }
 
-func NewClusterList(namespace string) *ClusterList {
-	return &ClusterList{
-		ListModel: ListModel{Kind: KIND_CLUSTER_LIST},
+func NewClusterRespList(namespace string) *ClusterRespList {
+	return &ClusterRespList{
+		ListModel: ListModel{Kind: KIND_CLUSTER_RESP_LIST},
 		Namespace: namespace,
-		Items:     []Cluster{},
+		Items:     []ClusterResp{},
 	}
 }
 
-func ClusterReqDef(req *ClusterReq) {
+func ClusterReqConfKubeDef(req *ClusterReq) {
 	req.Config.Kubernetes.NetworkCni = lang.NVL(req.Config.Kubernetes.NetworkCni, config.NETWORKCNI_KILO)
 	req.Config.Kubernetes.PodCidr = lang.NVL(req.Config.Kubernetes.PodCidr, config.POD_CIDR)
 	req.Config.Kubernetes.ServiceCidr = lang.NVL(req.Config.Kubernetes.ServiceCidr, config.SERVICE_CIDR)

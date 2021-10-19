@@ -9,8 +9,8 @@ const (
 	KIND_PACKAGE_LIST      = "PackageList"
 	KIND_APP_INSTANCE      = "AppInstance"
 	KIND_APP_INSTANCE_LIST = "AppInstanceList"
-	KIND_CLUSTER           = "Cluster"
-	KIND_CLUSTER_LIST      = "ClusterList"
+	KIND_CLUSTER_RESP      = "ClusterResponse"
+	KIND_CLUSTER_RESP_LIST = "ClusterResponseList"
 )
 
 type Model struct {
