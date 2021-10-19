@@ -52,7 +52,7 @@ func CreateCluster(c echo.Context) error {
 		return SendMessage(c, http.StatusBadRequest, err.Error())
 	}
 
-	model.ClusterReqDef(clusterReq)
+	model.ClusterReqConfKubeDef(clusterReq)
 
 	err := model.ClusterReqValidate(clusterReq)
 	if err != nil {

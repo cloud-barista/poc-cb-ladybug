@@ -5,6 +5,10 @@ import (
 	"net/http"
 )
 
+const (
+	MCKS_CLUSTER_STATUS_COMPLETED = "completed"
+)
+
 type (
 	McksKubernetes struct {
 		NetworkCni       string `json:"networkCni"`
