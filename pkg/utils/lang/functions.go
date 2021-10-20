@@ -56,6 +56,15 @@ func GetStoreAppInstanceKey(namespace string, appInstanceName string) string {
 	}
 }
 
+// get store cluster key
+func GetStoreClusterKey(namespace, clusterName string) string {
+	if clusterName == "" {
+		return fmt.Sprintf("/ns/%s/clusters", namespace)
+	} else {
+		return fmt.Sprintf("/ns/%s/clusters/%s", namespace, clusterName)
+	}
+}
+
 // get uuid
 func GetUid() string {
 	return uuid.New().String()
