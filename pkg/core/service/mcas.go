@@ -1,10 +1,13 @@
 package service
 
 import (
+	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/cloud-barista/cb-mcas/pkg/core/common"
 	"github.com/cloud-barista/cb-mcas/pkg/core/model"
+	m "github.com/cloud-barista/cb-mcas/pkg/core/model/mcks"
 )
 
 func GetMcas(namespace string) (string, error) {
@@ -33,7 +36,44 @@ func GetMcas(namespace string) (string, error) {
 
 func EnableMcas(namespace string) error {
 	mcas := model.NewMcas(namespace)
-	err := mcas.Enable()
+
+	status, err := mcas.GetStatus()
+	if err != nil {
+		common.CBLog.Error(err)
+		return err
+	}
+
+	if status == model.STATUS_MCAS_ENABLED {
+		common.CBLog.Infof("MCAS for namespace '%s' is already enabled.\n", namespace)
+		return nil
+	}
+
+	//
+	// Create a new cluster
+	//
+	clusterName := "mcas-cluster"
+
+	clusterInfo := model.NewClusterInfo(namespace, clusterName)
+	clusterInfo.TriggerCreate()
+
+	clusterReq := makeClusterReq(clusterName)
+	cluster, err := CreateCluster(namespace, clusterReq)
+	if err != nil {
+		common.CBLog.Error(err)
+		return err
+	}
+
+	if cluster.Status != m.MCKS_CLUSTER_STATUS_COMPLETED {
+		clusterInfo.TriggerFail()
+		return errors.New(fmt.Sprintf("cluster '%s' creation is failed", clusterName))
+	} else {
+		clusterInfo.TriggerSuccess()
+	}
+
+	//
+	// Set MCAS Status to 'enabled'
+	//
+	err = mcas.Enable()
 	if err != nil {
 		common.CBLog.Error(err)
 		return err
@@ -44,11 +84,78 @@ func EnableMcas(namespace string) error {
 
 func DisableMcas(namespace string) error {
 	mcas := model.NewMcas(namespace)
-	err := mcas.Disable()
+
+	status, err := mcas.GetStatus()
+	if err != nil {
+		common.CBLog.Error(err)
+		return err
+	}
+
+	if status == model.STATUS_MCAS_DISABLED {
+		common.CBLog.Infof("MCAS for namespace '%s' is already disabled.\n", namespace)
+		return nil
+	}
+
+	//
+	// Delete the mcas cluster
+	//
+	clusterName := "mcas-cluster"
+
+	clusterInfo := model.NewClusterInfo(namespace, clusterName)
+	clusterInfo.Select()
+	clusterInfo.TriggerDelete()
+
+	clusterStatus, err := DeleteCluster(namespace, clusterName)
+	if err != nil {
+		common.CBLog.Error(err)
+		return err
+	}
+
+	clusterInfo.Delete()
+
+	_ = clusterStatus
+
+	//
+	// Set MCAS Status to 'disabled'
+	//
+	err = mcas.Disable()
 	if err != nil {
 		common.CBLog.Error(err)
 		return err
 	}
 
 	return nil
+}
+
+func makeClusterReq(clusterName string) *model.ClusterReq {
+	var clusterReq model.ClusterReq
+
+	clusterReq.Config.Kubernetes.NetworkCni = "kilo"
+	clusterReq.Config.Kubernetes.PodCidr = "10.244.0.0/16"
+	clusterReq.Config.Kubernetes.ServiceCidr = "10.96.0.0/12"
+	clusterReq.Config.Kubernetes.ServiceDnsDomain = "cluster.local"
+
+	var ncCp m.McksNodeConfig
+	ncCp.Connection = "config-aws-ap-northeast-2"
+	ncCp.Count = 1
+	ncCp.Spec = "t2.medium"
+
+	clusterReq.ControlPlane = append(clusterReq.ControlPlane, ncCp)
+
+	clusterReq.Name = clusterName
+
+	var ncW m.McksNodeConfig
+	ncW.Connection = "config-aws-ap-northeast-1"
+	ncW.Count = 1
+	ncW.Spec = "t2.small"
+
+	clusterReq.Worker = append(clusterReq.Worker, ncW)
+
+	ncW.Connection = "config-gcp-asia-northeast3"
+	ncW.Count = 1
+	ncW.Spec = "n1-standard-2"
+
+	clusterReq.Worker = append(clusterReq.Worker, ncW)
+
+	return &clusterReq
 }
