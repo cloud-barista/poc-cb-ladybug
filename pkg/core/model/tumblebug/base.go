@@ -7,8 +7,8 @@ import (
 	"net/http"
 
 	"github.com/beego/beego/v2/core/validation"
-	"github.com/cloud-barista/cb-mcas/pkg/utils/app"
 	"github.com/cloud-barista/cb-mcas/pkg/utils/config"
+	rc "github.com/cloud-barista/cb-mcas/pkg/utils/rest-client"
 	"github.com/sirupsen/logrus"
 )
 
@@ -35,7 +35,7 @@ func (self *Model) execute(method string, url string, body interface{}, result i
 		return false, err
 	}
 
-	resp, err := app.ExecuteHTTP(method, *config.Config.TumblebugUrl+url, body, result)
+	resp, err := rc.ExecuteHTTP(method, *config.Config.TumblebugUrl+url, body, result)
 	if err != nil {
 		return false, err
 	}
