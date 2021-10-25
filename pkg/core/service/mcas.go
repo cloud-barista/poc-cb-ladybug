@@ -57,13 +57,13 @@ func EnableMcas(namespace string) error {
 	clusterInfo.TriggerCreate()
 
 	clusterReq := makeClusterReq(clusterName)
-	cluster, err := CreateCluster(namespace, clusterReq)
+	clusterResp, err := CreateCluster(namespace, clusterReq)
 	if err != nil {
 		common.CBLog.Error(err)
 		return err
 	}
 
-	if cluster.Status != m.MCKS_CLUSTER_STATUS_COMPLETED {
+	if clusterResp.Status != m.MCKS_CLUSTER_STATUS_COMPLETED {
 		clusterInfo.TriggerFail()
 		return errors.New(fmt.Sprintf("cluster '%s' creation is failed", clusterName))
 	} else {
