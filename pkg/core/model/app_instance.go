@@ -1,42 +1,56 @@
 package model
 
 import (
-	"encoding/json"
 	"errors"
-	"fmt"
+	"time"
 
 	"github.com/cloud-barista/cb-mcas/pkg/core/common"
 	"github.com/cloud-barista/cb-mcas/pkg/utils/lang"
 )
 
-type AppInstance struct {
-	Model
-	Namespace string `json:"namespace"`
-	Version   string `json:"version"`
-}
+type (
+	AppInstance struct {
+		//	Model
+		Name        string `json:"name"`
+		Namespace   string `json:"namespace"`
+		PackageName string `json:"packageName"`
+		Version     string `json:"version"`
+	}
 
-type AppInstanceList struct {
-	ListModel
-	Namespace string
-	Items     []AppInstance `json:"items"`
-}
+	AppInstanceList struct {
+		//ListModel
+		Namespace string
+		Items     []AppInstance `json:"items"`
+	}
 
-func NewAppInstance(namespace, name, version string) *AppInstance {
+	AppInstanceReq struct {
+		InstanceName string        `json:"instance"`
+		PackageName  string        `json:"package"`
+		Version      string        `json:"version,omitempty"`
+		Wait         bool          `json:"wait,omitempty"`
+		Timeout      time.Duration `json:timeout,omitempty"`
+		Force        bool          `json:"force,omitempty"`
+		UpgradeCRDs  bool          `json:"upgradeCRDs,omitempty"`
+	}
+)
+
+func NewAppInstance(namespace, instName, pkgName, version string) *AppInstance {
 	return &AppInstance{
-		Model:     Model{Kind: KIND_APP_INSTANCE, Name: name},
-		Namespace: namespace,
-		Version:   version,
+		Name:        instName,
+		Namespace:   namespace,
+		PackageName: pkgName,
+		Version:     version,
 	}
 }
 
 func NewAppInstanceList(namespace string) *AppInstanceList {
 	return &AppInstanceList{
-		ListModel: ListModel{Kind: KIND_APP_INSTANCE_LIST},
 		Namespace: namespace,
 		Items:     []AppInstance{},
 	}
 }
 
+/*
 func (self *AppInstance) Select() error {
 	key := lang.GetStoreAppInstanceKey(self.Namespace, self.Name)
 	keyValue, err := common.CBStore.Get(key)
@@ -84,4 +98,45 @@ func (self *AppInstanceList) SelectList() error {
 	}
 
 	return nil
+}
+*/
+func AppInstanceReqDef(req *AppInstanceReq) {
+	printAppInstanceReq(req)
+	if req.Timeout == 0 {
+		// Set timeout to helm default timeout(300 second)
+		req.Timeout = 300
+	}
+	printAppInstanceReq(req)
+}
+
+func AppInstanceReqValidate(req *AppInstanceReq) error {
+	if len(req.InstanceName) == 0 {
+		return errors.New("app instance name is empty")
+	} else {
+		err := lang.CheckName(req.InstanceName)
+		if err != nil {
+			return err
+		}
+	}
+
+	if len(req.PackageName) == 0 {
+		return errors.New("app package name is empty")
+	} else {
+		err := lang.CheckName(req.PackageName)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func printAppInstanceReq(req *AppInstanceReq) {
+	common.CBLog.Debugf("AppInstanceReq.InstanceName:\t%v", req.InstanceName)
+	common.CBLog.Debugf("AppInstanceReq.PackageName:\t%v", req.PackageName)
+	common.CBLog.Debugf("AppInstanceReq.Version:\t%v", req.Version)
+	common.CBLog.Debugf("AppInstanceReq.Wait:\t\t%v", req.Wait)
+	common.CBLog.Debugf("AppInstanceReq.Timeout:\t%v", req.Timeout*time.Second)
+	common.CBLog.Debugf("AppInstanceReq.Force:\t\t%v", req.Force)
+	common.CBLog.Debugf("AppInstanceReq.UpgradeCRDs:\t%v", req.UpgradeCRDs)
 }
