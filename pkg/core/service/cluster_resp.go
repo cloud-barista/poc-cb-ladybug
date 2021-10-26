@@ -73,7 +73,7 @@ func DeleteCluster(namespace, name string) (*model.Status, error) {
 	*/
 	status := model.NewStatus()
 
-	common.CBLog.Infof("delete a cluster (name=%s)", name)
+	common.CBLog.Infof("delete the cluster '%s'", name)
 
 	mcks := m.NewMcks(namespace)
 	mcksStatus, err := mcks.DeleteCluster(name)
@@ -135,6 +135,7 @@ func makeClusterResp(mcksCluster *m.McksCluster) *model.ClusterResp {
 	}
 
 	clusterResp.SetStatus(mcksCluster.Status)
+	clusterResp.SetClusterConfig(mcksCluster.ClusterConfig)
 
 	/*
 		if mcksCluster.Status == m.MCKS_CLUSTER_STATUS_COMPLETED {

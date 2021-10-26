@@ -36,30 +36,49 @@ func GetMcas(namespace string) (string, error) {
 
 func EnableMcas(namespace string) error {
 	mcas := model.NewMcas(namespace)
+	/*
+		status, err := mcas.GetStatus()
+		if err != nil {
+			common.CBLog.Error(err)
+			return err
+		}
 
-	status, err := mcas.GetStatus()
+		if status == model.STATUS_MCAS_ENABLED {
+			common.CBLog.Infof("MCAS for namespace '%s' is already enabled.\n", namespace)
+			return nil
+		}
+	*/
+
+	clusterName := "mcas-cluster"
+
+	clusterResp, err := GetCluster(namespace, clusterName)
 	if err != nil {
-		common.CBLog.Error(err)
 		return err
 	}
 
-	if status == model.STATUS_MCAS_ENABLED {
-		common.CBLog.Infof("MCAS for namespace '%s' is already enabled.\n", namespace)
+	if clusterResp.Status == m.MCKS_CLUSTER_STATUS_COMPLETED {
+		common.CBLog.Infof("namespace '%s': cluster '%s' is already existed.\n", namespace, clusterName)
 		return nil
 	}
 
 	//
+	// FIXME: fix the repositoy url
+	//
+	addPackageRepo(namespace, "http://localhost:38080")
+
+	//
 	// Create a new cluster
 	//
-	clusterName := "mcas-cluster"
 
 	clusterInfo := model.NewClusterInfo(namespace, clusterName)
 	clusterInfo.TriggerCreate()
 
 	clusterReq := makeClusterReq(clusterName)
-	clusterResp, err := CreateCluster(namespace, clusterReq)
+	clusterResp, err = CreateCluster(namespace, clusterReq)
 	if err != nil {
 		common.CBLog.Error(err)
+		common.CBLog.Infof("try to delete the cluster '%s'", clusterName)
+		DeleteCluster(namespace, clusterName)
 		return err
 	}
 
@@ -67,6 +86,7 @@ func EnableMcas(namespace string) error {
 		clusterInfo.TriggerFail()
 		return errors.New(fmt.Sprintf("cluster '%s' creation is failed", clusterName))
 	} else {
+		clusterInfo.SetClusterConfig(clusterResp.GetClusterConfig())
 		clusterInfo.TriggerSuccess()
 	}
 
@@ -85,16 +105,18 @@ func EnableMcas(namespace string) error {
 func DisableMcas(namespace string) error {
 	mcas := model.NewMcas(namespace)
 
-	status, err := mcas.GetStatus()
-	if err != nil {
-		common.CBLog.Error(err)
-		return err
-	}
+	/*
+		status, err := mcas.GetStatus()
+		if err != nil {
+			common.CBLog.Error(err)
+			return err
+		}
 
-	if status == model.STATUS_MCAS_DISABLED {
-		common.CBLog.Infof("MCAS for namespace '%s' is already disabled.\n", namespace)
-		return nil
-	}
+		if status == model.STATUS_MCAS_DISABLED {
+			common.CBLog.Infof("MCAS for namespace '%s' is already disabled.\n", namespace)
+			return nil
+		}
+	*/
 
 	//
 	// Delete the mcas cluster

@@ -81,21 +81,33 @@ func RunServer() {
 
 	g := e.Group(*config.Config.BasePath+"/ns", common.NsValidate())
 
+	//
 	// Routes
+	//
+
+	// mcas
 	g.POST("/:namespace/mcas", router.EnableMcas)
 	g.GET("/:namespace/mcas", router.GetMcas)
 	g.DELETE("/:namespace/mcas", router.DisableMcas)
 
+	// packages
 	g.POST("/:namespace/packages", router.UploadPackage)
 	g.GET("/:namespace/packages", router.ListPackage)
 	g.GET("/:namespace/packages/:package", router.GetPackageAllVersions)
 	g.GET("/:namespace/packages/:package/:version", router.GetPackage)
 	g.DELETE("/:namespace/packages/:package/:version", router.DeletePackage)
 
+	// clusters
 	g.POST("/:namespace/clusters", router.CreateCluster)
 	g.GET("/:namespace/clusters", router.ListCluster)
 	g.GET("/:namespace/clusters/:cluster", router.GetCluster)
 	g.DELETE("/:namespace/clusters/:cluster", router.DeleteCluster)
+
+	// apps
+	g.POST("/:namespace/apps", router.CreateApp)
+	g.GET("/:namespace/apps", router.ListApp)
+	g.GET("/:namespace/apps/:app", router.GetApp)
+	g.DELETE("/:namespace/apps/:app", router.DeleteApp)
 
 	// Start server
 	e.Logger.Fatal(e.Start(*cfg.Config.ListenAddress))

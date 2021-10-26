@@ -19,10 +19,11 @@ type (
 
 	ClusterResp struct {
 		Model
-		Namespace string `json:"namespace"`
-		Mcis      string `json:"mcis"`
-		Nodes     []Node `json:"nodes"`
-		Status    string `json:"status"`
+		Namespace     string `json:"namespace"`
+		Mcis          string `json:"mcis"`
+		Nodes         []Node `json:"nodes"`
+		Status        string `json:"status"`
+		clusterConfig string
 	}
 
 	ClusterReq struct {
@@ -63,6 +64,14 @@ func (self *ClusterResp) AddNode(node *Node) {
 
 func (self *ClusterResp) SetStatus(status string) {
 	self.Status = status
+}
+
+func (self *ClusterResp) GetClusterConfig() string {
+	return self.clusterConfig
+}
+
+func (self *ClusterResp) SetClusterConfig(clusterConfig string) {
+	self.clusterConfig = clusterConfig
 }
 
 func NewClusterRespList(namespace string) *ClusterRespList {

@@ -29,7 +29,7 @@ func EnableMcas(c echo.Context) error {
 		return SendMessage(c, http.StatusBadRequest, err.Error())
 	}
 
-	return Send(c, http.StatusOK, nil)
+	return Send(c, http.StatusOK, "enabled")
 }
 
 func DisableMcas(c echo.Context) error {
@@ -41,5 +41,5 @@ func DisableMcas(c echo.Context) error {
 		return SendMessage(c, http.StatusBadRequest, err.Error())
 	}
 
-	return Send(c, http.StatusOK, nil)
+	return Send(c, http.StatusOK, "disabled")
 }
