@@ -25,7 +25,7 @@ jobs:
       run: make
 
     - name: Build docker image
-        env:
+      env:
           # TODO: Change variable to your repository name and image name.
           IMAGE_NAME: cb-ladybug
-        run: docker build . --file Dockerfile --tag $IMAGE_NAME
+      run: docker build . --file Dockerfile --tag $IMAGE_NAME
