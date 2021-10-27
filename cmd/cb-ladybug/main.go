@@ -3,8 +3,8 @@ package main
 import (
 	"sync"
 
-	restapi "github.com/cloud-barista/cb-mcas/pkg/rest-api"
-	"github.com/cloud-barista/cb-mcas/pkg/utils/config"
+	restapi "github.com/cloud-barista/cb-ladybug/pkg/rest-api"
+	"github.com/cloud-barista/cb-ladybug/pkg/utils/config"
 )
 
 // @title CB-Ladybug REST API

@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	"github.com/chartmuseum/helm-push/pkg/helm"
-	"github.com/cloud-barista/cb-mcas/pkg/core/common"
-	rc "github.com/cloud-barista/cb-mcas/pkg/utils/rest-client"
+	"github.com/cloud-barista/cb-ladybug/pkg/core/common"
+	rc "github.com/cloud-barista/cb-ladybug/pkg/utils/rest-client"
 )
 
 // Chartmuseum's Chart

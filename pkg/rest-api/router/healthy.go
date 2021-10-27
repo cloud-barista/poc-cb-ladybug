@@ -3,7 +3,7 @@ package router
 import (
 	"net/http"
 
-	"github.com/cloud-barista/cb-mcas/pkg/core/common"
+	"github.com/cloud-barista/cb-ladybug/pkg/core/common"
 	"github.com/labstack/echo/v4"
 )
 

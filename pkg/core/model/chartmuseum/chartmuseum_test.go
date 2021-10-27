@@ -3,8 +3,8 @@ package chartmuseum
 import (
 	"testing"
 
-	"github.com/cloud-barista/cb-mcas/pkg/utils/config"
-	"github.com/cloud-barista/cb-mcas/pkg/utils/lang"
+	"github.com/cloud-barista/cb-ladybug/pkg/utils/config"
+	"github.com/cloud-barista/cb-ladybug/pkg/utils/lang"
 )
 
 var (
