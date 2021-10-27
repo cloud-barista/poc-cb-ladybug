@@ -34,7 +34,10 @@ func GetCluster(namespace, name string) (*model.ClusterResp, error) {
 		return nil, err
 	}
 
-	clusterResp := makeClusterResp(mcksCluster)
+	var clusterResp *model.ClusterResp = nil
+	if mcksCluster != nil {
+		clusterResp = makeClusterResp(mcksCluster)
+	}
 
 	return clusterResp, nil
 }
