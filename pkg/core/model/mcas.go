@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/cloud-barista/cb-mcas/pkg/core/common"
-	"github.com/cloud-barista/cb-mcas/pkg/utils/lang"
+	"github.com/cloud-barista/cb-ladybug/pkg/core/common"
+	"github.com/cloud-barista/cb-ladybug/pkg/utils/lang"
 )
 
 type McasStatus string

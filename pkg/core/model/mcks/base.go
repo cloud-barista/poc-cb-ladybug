@@ -7,9 +7,9 @@ import (
 	"net/http"
 
 	"github.com/beego/beego/v2/core/validation"
-	"github.com/cloud-barista/cb-mcas/pkg/core/common"
-	"github.com/cloud-barista/cb-mcas/pkg/utils/config"
-	rc "github.com/cloud-barista/cb-mcas/pkg/utils/rest-client"
+	"github.com/cloud-barista/cb-ladybug/pkg/core/common"
+	"github.com/cloud-barista/cb-ladybug/pkg/utils/config"
+	rc "github.com/cloud-barista/cb-ladybug/pkg/utils/rest-client"
 	"github.com/go-resty/resty/v2"
 )
 

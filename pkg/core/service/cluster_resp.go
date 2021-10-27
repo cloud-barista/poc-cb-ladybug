@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/cloud-barista/cb-mcas/pkg/core/common"
-	"github.com/cloud-barista/cb-mcas/pkg/core/model"
-	m "github.com/cloud-barista/cb-mcas/pkg/core/model/mcks"
+	"github.com/cloud-barista/cb-ladybug/pkg/core/common"
+	"github.com/cloud-barista/cb-ladybug/pkg/core/model"
+	m "github.com/cloud-barista/cb-ladybug/pkg/core/model/mcks"
 )
 
 func ListCluster(namespace string) (*model.ClusterRespList, error) {
