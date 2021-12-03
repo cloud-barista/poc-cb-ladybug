@@ -10,19 +10,31 @@ import (
 
 type (
 	Node struct {
-		Name     string `json:"name"`
-		PublicIp string `json:"publicIp"`
-		Csp      string `json:"csp"`
-		Role     string `json:"role"`
-		Spec     string `json:"spec"`
+		CreatedTime string `json:"createdTime"`
+		Csp         string `json:"csp"`
+		CspLabel    string `json:"cspLabel"`
+		Name        string `json:"name"`
+		PublicIp    string `json:"publicIp"`
+		RegionLabel string `json:"regionLabel"`
+		Role        string `json:"role"`
+		Spec        string `json:"spec"`
+		ZoneLabel   string `json:"zoneLabel"`
 	}
 
 	ClusterResp struct {
 		Model
-		Namespace     string `json:"namespace"`
-		Mcis          string `json:"mcis"`
-		Nodes         []Node `json:"nodes"`
-		Status        string `json:"status"`
+		CreatedTime string `json:"createdTime"`
+		Description string `json:"description"`
+		Label       string `json:"label"`
+		Namespace   string `json:"namespace"`
+		Mcis        string `json:"mcis"`
+		Nodes       []Node `json:"nodes"`
+		Status      struct {
+			Phase   string `json:"phase"`
+			Reason  string `json:"reason"`
+			Message string `json:"message"`
+		} `json:"status"`
+
 		clusterConfig string
 	}
 
@@ -37,13 +49,17 @@ type (
 	}
 )
 
-func NewNode(name, publicIp, csp, role, spec string) *Node {
+func NewNode(createdTime, csp, cspLabel, name, publicIp, regionLabel, role, spec, zoneLabel string) *Node {
 	return &Node{
-		Name:     name,
-		PublicIp: publicIp,
-		Csp:      csp,
-		Role:     role,
-		Spec:     spec,
+		CreatedTime: createdTime,
+		Csp:         csp,
+		CspLabel:    cspLabel,
+		Name:        name,
+		PublicIp:    publicIp,
+		RegionLabel: regionLabel,
+		Role:        role,
+		Spec:        spec,
+		ZoneLabel:   zoneLabel,
 	}
 }
 
@@ -54,6 +70,18 @@ func NewClusterResp(namespace, name string) *ClusterResp {
 	}
 }
 
+func (self *ClusterResp) SetCreatedTime(createdTime string) {
+	self.CreatedTime = createdTime
+}
+
+func (self *ClusterResp) SetDescription(description string) {
+	self.Description = description
+}
+
+func (self *ClusterResp) SetLabel(label string) {
+	self.Label = label
+}
+
 func (self *ClusterResp) SetMcis(mcis string) {
 	self.Mcis = mcis
 }
@@ -62,8 +90,10 @@ func (self *ClusterResp) AddNode(node *Node) {
 	self.Nodes = append(self.Nodes, *node)
 }
 
-func (self *ClusterResp) SetStatus(status string) {
-	self.Status = status
+func (self *ClusterResp) SetStatus(phase, reason, message string) {
+	self.Status.Phase = phase
+	self.Status.Reason = reason
+	self.Status.Message = message
 }
 
 func (self *ClusterResp) GetClusterConfig() string {
