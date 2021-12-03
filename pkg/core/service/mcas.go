@@ -168,6 +168,9 @@ func makeClusterReq(clusterName string) *model.ClusterReq {
 	ncCp.Spec = "t2.medium"
 
 	clusterReq.ControlPlane = append(clusterReq.ControlPlane, ncCp)
+	clusterReq.Description = "cluster for MCAS"
+	clusterReq.InstallMonAgent = "no"
+	clusterReq.Label = "MCAS"
 
 	clusterReq.Name = clusterName
 
