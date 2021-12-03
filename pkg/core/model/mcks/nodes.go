@@ -9,14 +9,17 @@ import (
 
 type (
 	McksNode struct {
-		Credential string `json:"credential"`
-		Csp        string `json:"csp"`
-		Kind       string `json:"kind"`
-		Name       string `json:"name"`
-		PublicIp   string `json:"publicIp"`
-		Role       string `json:"role"`
-		Spec       string `json:"spec"`
-		Uid        string `json:"uid"`
+		CreatedTime string `json:"createdTime"`
+		Credential  string `json:"credential"`
+		Csp         string `json:"csp"`
+		CspLabel    string `json:"cspLabel"`
+		Kind        string `json:"kind"`
+		Name        string `json:"name"`
+		PublicIp    string `json:"publicIp"`
+		RegionLabel string `json:"regionLabel"`
+		Role        string `json:"role"`
+		Spec        string `json:"spec"`
+		ZoneLabel   string `json:"zoneLabel"`
 	}
 
 	McksNodeList struct {

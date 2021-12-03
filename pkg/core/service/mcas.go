@@ -56,7 +56,7 @@ func EnableMcas(namespace string) error {
 		return err
 	}
 
-	if clusterResp != nil && clusterResp.Status == m.MCKS_CLUSTER_STATUS_COMPLETED {
+	if clusterResp != nil && clusterResp.Status.Phase == m.MCKS_CLUSTER_STATUS_PHASE_PROVISIONED {
 		common.CBLog.Infof("'%s/%s' cluster is already existed.\n", namespace, clusterName)
 		return nil
 	}
@@ -77,14 +77,15 @@ func EnableMcas(namespace string) error {
 	clusterResp, err = CreateCluster(namespace, clusterReq)
 	if err != nil {
 		common.CBLog.Error(err)
-		common.CBLog.Infof("try to delete the cluster '%s/%s'", namespace, clusterName)
-		DeleteCluster(namespace, clusterName)
+		//common.CBLog.Infof("try to delete the cluster '%s/%s'", namespace, clusterName)
+		//DeleteCluster(namespace, clusterName)
 		return err
 	}
 
-	if clusterResp.Status != m.MCKS_CLUSTER_STATUS_COMPLETED {
+	if clusterResp.Status.Phase != m.MCKS_CLUSTER_STATUS_PHASE_PROVISIONED {
 		clusterInfo.TriggerFail()
-		return errors.New(fmt.Sprintf("cluster '%s/%s' creation is failed", namespace, clusterName))
+		return errors.New(fmt.Sprintf("cluster '%s/%s' creating is failed (reason=%s, message=%s)",
+			namespace, clusterName, clusterResp.Status.Reason, clusterResp.Status.Message))
 	} else {
 		clusterInfo.SetClusterConfig(clusterResp.GetClusterConfig())
 		clusterInfo.TriggerSuccess()
