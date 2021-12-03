@@ -32,7 +32,7 @@ func TestCreateGetCluster(t *testing.T) {
 		t.Fatalf("Mcks.CreateCluster error - cause=%v : %s", err, lang.GetFuncName())
 	}
 
-	if cluster.Status != MCKS_CLUSTER_STATUS_COMPLETED {
+	if cluster.Status.Phase != MCKS_CLUSTER_STATUS_PHASE_PROVISIONED {
 		mcks.DeleteCluster(clusterName)
 		t.Fatalf("The cluster creation is not completed - cause=%v : %s", err, lang.GetFuncName())
 	}
@@ -135,6 +135,9 @@ func makeMcksClusterReq(clusterName string) *McksClusterReq {
 	ncCp.Spec = "t2.medium"
 
 	clusterReq.ControlPlane = append(clusterReq.ControlPlane, ncCp)
+	clusterReq.Description = "cluster for MCAS"
+	clusterReq.InstallMonAgent = "no"
+	clusterReq.Label = "MCAS"
 
 	clusterReq.Name = clusterName
 
@@ -159,7 +162,14 @@ func printMcksCluster(t *testing.T, mcksCluster *McksCluster) {
 	t.Log("Cluster Name: ", mcksCluster.Name)
 	t.Log("\tClusterConfig: ", mcksCluster.ClusterConfig)
 	t.Log("\tCpLeader: ", mcksCluster.CpLeader)
+	t.Log("\tCreatedTime: ", mcksCluster.CreatedTime)
+	t.Log("\tDescription: ", mcksCluster.Description)
+	t.Log("\tInstallMonAgent: ", mcksCluster.InstallMonAgent)
 	t.Log("\tKind: ", mcksCluster.Kind)
+	t.Log("\tLabel: ", mcksCluster.Label)
+	t.Log("\tMcis: ", mcksCluster.Mcis)
+	t.Log("\tName: ", mcksCluster.Name)
+	t.Log("\tNamespace: ", mcksCluster.Namespace)
 	t.Log("\tNetworkCni: ", mcksCluster.NetworkCni)
 	t.Log("\tNodes: ")
 	for _, node := range mcksCluster.Nodes {
@@ -172,8 +182,10 @@ func printMcksCluster(t *testing.T, mcksCluster *McksCluster) {
 		t.Log("\t\tSpec: ", node.Spec)
 		t.Log("\t\tUid: ", node.Uid)
 	}
-	t.Log("\tStatus: ", mcksCluster.Status)
-	t.Log("\tUid: ", mcksCluster.Uid)
+	t.Log("\tStatus: ")
+	t.Log("\t\tPhase: ", mcksCluster.Status.Phase)
+	t.Log("\t\tReason: ", mcksCluster.Status.Reason)
+	t.Log("\t\tMessage: ", mcksCluster.Status.Message)
 }
 
 func makeMcksNodeReq() *McksNodeReq {
@@ -191,14 +203,17 @@ func makeMcksNodeReq() *McksNodeReq {
 
 func printMcksNode(t *testing.T, node *McksNode) {
 	t.Log("Node Name: ", node.Name)
+	t.Log("\tCreatedTime: ", node.CreatedTime)
 	t.Log("\tCredential: ", node.Credential)
 	t.Log("\tCsp: ", node.Csp)
+	t.Log("\tCspLabel: ", node.CspLabel)
 	t.Log("\tKind: ", node.Kind)
 	t.Log("\tName: ", node.Name)
 	t.Log("\tPublicIp: ", node.PublicIp)
+	t.Log("\tRegionLabel: ", node.RegionLabel)
 	t.Log("\tRole: ", node.Role)
 	t.Log("\tSpec: ", node.Spec)
-	t.Log("\tUid: ", node.Uid)
+	t.Log("\tZoneLabel: ", node.ZoneLabel)
 }
 
 func printMcksNodeList(t *testing.T, nodeList *McksNodeList) {

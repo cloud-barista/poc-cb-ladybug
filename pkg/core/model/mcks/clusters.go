@@ -6,7 +6,11 @@ import (
 )
 
 const (
-	MCKS_CLUSTER_STATUS_COMPLETED = "completed"
+	MCKS_CLUSTER_STATUS_PHASE_PENDING      = "Pending"
+	MCKS_CLUSTER_STATUS_PHASE_PROVISIONING = "Provisioning"
+	MCKS_CLUSTER_STATUS_PHASE_PROVISIONED  = "Provisioned"
+	MCKS_CLUSTER_STATUS_PHASE_FAILED       = "Failed"
+	MCKS_CLUSTER_STATUS_PHASE_DELETING     = "Deleting"
 )
 
 type (
@@ -22,23 +26,33 @@ type (
 	}
 
 	McksClusterReq struct {
-		Config       McksConfig       `json:"config"`
-		ControlPlane []McksNodeConfig `json:"controlPlane"`
-		Name         string           `json:"name"`
-		Worker       []McksNodeConfig `json:"worker"`
+		Config          McksConfig       `json:"config"`
+		ControlPlane    []McksNodeConfig `json:"controlPlane"`
+		Description     string           `json:"description"`
+		InstallMonAgent string           `json:"installMonAgent"`
+		Label           string           `json:"label"`
+		Name            string           `json:"name"`
+		Worker          []McksNodeConfig `json:"worker"`
 	}
 
 	McksCluster struct {
-		ClusterConfig string     `json:"clusterConfig"`
-		CpLeader      string     `json:"cpLeader"`
-		Kind          string     `json:"kind"`
-		Mcis          string     `json:"mcis"`
-		Name          string     `json:"name"`
-		Namespace     string     `json:"namespace"`
-		NetworkCni    string     `json:"networkCni"`
-		Nodes         []McksNode `json:"nodes"`
-		Status        string     `json:"status"`
-		Uid           string     `json:"uid"`
+		ClusterConfig   string     `json:"clusterConfig"`
+		CpLeader        string     `json:"cpLeader"`
+		CreatedTime     string     `json:"createdTime"`
+		Description     string     `json:"description"`
+		InstallMonAgent string     `json:"installMonAgent"`
+		Kind            string     `json:"kind"`
+		Label           string     `json:"label"`
+		Mcis            string     `json:"mcis"`
+		Name            string     `json:"name"`
+		Namespace       string     `json:"namespace"`
+		NetworkCni      string     `json:"networkCni"`
+		Nodes           []McksNode `json:"nodes"`
+		Status          struct {
+			Phase   string `json:"phase"`
+			Reason  string `json:"reason"`
+			Message string `json:"message"`
+		} `json:"status"`
 	}
 
 	McksClusterList struct {

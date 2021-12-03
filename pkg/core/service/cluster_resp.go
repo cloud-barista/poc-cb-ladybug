@@ -43,10 +43,6 @@ func GetCluster(namespace, name string) (*model.ClusterResp, error) {
 }
 
 func CreateCluster(namespace string, req *model.ClusterReq) (*model.ClusterResp, error) {
-	/*
-		clusterInfo := model.NewClusterInfo(namespace, req.Name)
-		clusterInfo.TriggerCreate()
-	*/
 	mcks := m.NewMcks(namespace)
 	mcksCluster, err := mcks.CreateCluster(req.McksClusterReq)
 	if err != nil {
@@ -55,25 +51,10 @@ func CreateCluster(namespace string, req *model.ClusterReq) (*model.ClusterResp,
 
 	clusterResp := makeClusterResp(mcksCluster)
 
-	/*
-		if mcksCluster.Status == m.MCKS_CLUSTER_STATUS_COMPLETED {
-			clusterInfo.TriggerSuccess()
-		} else {
-			clusterInfo.TriggerFail()
-		}
-	*/
-
 	return clusterResp, nil
 }
 
 func DeleteCluster(namespace, name string) (*model.Status, error) {
-	/*
-		clusterInfo := model.NewClusterInfo(namespace, name)
-		ci_err := clusterInfo.Load()
-		if ci_err != nil {
-			common.CBLog.Warnf("cluster '%s' not found in store", name)
-		}
-	*/
 	status := model.NewStatus()
 
 	common.CBLog.Infof("delete the cluster '%s'", name)
@@ -105,52 +86,33 @@ func DeleteCluster(namespace, name string) (*model.Status, error) {
 		status.Message = fmt.Sprintf("cluster '%s' was not found", name)
 	}
 
-	/*
-		if ci_err != nil {
-			clusterInfo.TriggerDelete()
-			clusterInfo.Delete()
-		}
-	*/
 	return status, nil
 }
 
 func makeClusterResp(mcksCluster *m.McksCluster) *model.ClusterResp {
-	/*
-		clusterInfo := model.NewClusterInfo(mcksCluster.Namespace, mcksCluster.Name)
-		ci_err := clusterInfo.Load()
-		if ci_err != nil {
-			common.CBLog.Warnf("cluster '%s' not found in store", mcksCluster.Name)
-			clusterInfo.TriggerCreate()
-		}
-	*/
 	clusterResp := model.NewClusterResp(mcksCluster.Namespace, mcksCluster.Name)
+	clusterResp.SetCreatedTime(mcksCluster.CreatedTime)
+	clusterResp.SetDescription(mcksCluster.Description)
+	clusterResp.SetLabel(mcksCluster.Label)
 	clusterResp.SetMcis(mcksCluster.Mcis)
 
 	for _, mcksNode := range mcksCluster.Nodes {
 		node := model.NewNode(
+			mcksNode.CreatedTime,
+			mcksNode.Csp,
+			mcksNode.CspLabel,
 			mcksNode.Name,
 			mcksNode.PublicIp,
-			mcksNode.Csp,
+			mcksNode.RegionLabel,
 			mcksNode.Role,
 			mcksNode.Spec,
+			mcksNode.ZoneLabel,
 		)
 		clusterResp.AddNode(node)
 	}
 
-	clusterResp.SetStatus(mcksCluster.Status)
+	clusterResp.SetStatus(mcksCluster.Status.Phase, mcksCluster.Status.Reason, mcksCluster.Status.Message)
 	clusterResp.SetClusterConfig(mcksCluster.ClusterConfig)
 
-	/*
-		if mcksCluster.Status == m.MCKS_CLUSTER_STATUS_COMPLETED {
-			clusterInfo.SetClusterConfig(mcksCluster.ClusterConfig)
-			clusterInfo.TriggerSuccess()
-		} else {
-			if ci_err != nil {
-				clusterInfo.TriggerFail()
-			} else {
-				clusterInfo.TriggerUnknown()
-			}
-		}
-	*/
 	return clusterResp
 }
