@@ -8,7 +8,7 @@ require (
 	github.com/cloud-barista/cb-store v0.4.1
 	github.com/go-resty/resty/v2 v2.6.0
 	github.com/google/uuid v1.3.0
-	github.com/labstack/echo/v4 v4.6.1
+	github.com/labstack/echo/v4 v4.9.0
 	github.com/mittwald/go-helm-client v0.8.3-0.20211026133933-a26889186afc
 	github.com/sirupsen/logrus v1.8.1
 	github.com/swaggo/echo-swagger v1.1.4
