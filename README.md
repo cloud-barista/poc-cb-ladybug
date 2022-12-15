@@ -1,4 +1,3 @@
-=======
 # CB-Ladybug(POC) :beetle:
 > Multi-Cloud Application Management Framework
 
