@@ -13,7 +13,7 @@ require (
 	github.com/mittwald/go-helm-client v0.8.3-0.20211026133933-a26889186afc
 	github.com/sirupsen/logrus v1.8.1
 	github.com/swaggo/echo-swagger v1.1.4
-	helm.sh/helm/v3 v3.9.4
+	helm.sh/helm/v3 v3.10.3
 )
 
 replace (
