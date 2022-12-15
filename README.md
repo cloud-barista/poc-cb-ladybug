@@ -1,4 +1,5 @@
-# CB-Ladybug (POC) :beetle:
+=======
+# CB-Ladybug(POC) :beetle:
 > Multi-Cloud Application Management Framework
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/cloud-barista/poc-cb-ladybug)](https://goreportcard.com/report/github.com/cloud-barista/poc-cb-ladybug)
@@ -12,7 +13,7 @@
 
 ```
 [NOTE]
-CB-Ladybug (POC) is currently under development. (the latest release is none) 
+CB-Ladybug(POC) is currently under development. (the latest release is none) 
 So, we do not recommend using the current release in production.
 Please note that the functionalities of CB-Ladybug are not stable and secure yet.
 If you have any difficulties in using CB-Ladybug, please let us know.
@@ -45,19 +46,19 @@ $ go get -v all
 ```
 $ export CBLOG_ROOT="$(pwd)"
 $ export CBSTORE_ROOT="$(pwd)"
-$ go run cmd/cb-ladybug/main.go
+$ go run cmd/poc-cb-ladybug/main.go
 ```
 
 ### Build and Execute
 
 ```
-$ go build -o cb-ladybug cmd/cb-ladybug/main.go
+$ go build -o poc-cb-ladybug cmd/poc-cb-ladybug/main.go
 ```
 
 ```
 $ export CBLOG_ROOT="$(pwd)"
 $ export CBSTORE_ROOT="$(pwd)"
-$ nohup ./cb-ladybug & > /dev/null
+$ nohup ./poc-cb-ladybug & > /dev/null
 ```
 
 ### Test
@@ -69,7 +70,7 @@ $ ./scripts/get-health.sh
 - Ladybug URL is 'http://localhost:1592/ladybug'
 
 ------------------------------------------------------------------------------
-cloud-barista cb-ladybug is alived
+cloud-barista poc-cb-ladybug is alived
 ```
 
 ### API documentation

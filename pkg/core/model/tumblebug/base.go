@@ -7,8 +7,8 @@ import (
 	"net/http"
 
 	"github.com/beego/beego/v2/core/validation"
-	"github.com/cloud-barista/cb-ladybug/pkg/utils/config"
-	rc "github.com/cloud-barista/cb-ladybug/pkg/utils/rest-client"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/utils/config"
+	rc "github.com/cloud-barista/poc-cb-ladybug/pkg/utils/rest-client"
 	"github.com/sirupsen/logrus"
 )
 

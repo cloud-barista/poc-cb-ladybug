@@ -3,7 +3,7 @@ package model
 import (
 	"testing"
 
-	"github.com/cloud-barista/cb-ladybug/pkg/utils/config"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/utils/config"
 )
 
 func TestMain(t *testing.T) {

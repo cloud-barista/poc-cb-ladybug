@@ -7,10 +7,10 @@ import (
 	"crypto/subtle"
 	"fmt"
 
-	"github.com/cloud-barista/cb-ladybug/pkg/core/common"
-	"github.com/cloud-barista/cb-ladybug/pkg/rest-api/router"
-	"github.com/cloud-barista/cb-ladybug/pkg/utils/config"
-	cfg "github.com/cloud-barista/cb-ladybug/pkg/utils/config"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/core/common"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/rest-api/router"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/utils/config"
+	cfg "github.com/cloud-barista/poc-cb-ladybug/pkg/utils/config"
 
 	// REST API (echo)
 	"net/http"
@@ -34,7 +34,7 @@ const (
 const (
 	Version = " Version: Affogato"
 	website = " Repository: https://github.com/cloud-barista/poc-cb-ladybug"
-	banner  = `CB-Ladybug`
+	banner  = `CB-Ladybug (POC)`
 )
 
 // Main Body

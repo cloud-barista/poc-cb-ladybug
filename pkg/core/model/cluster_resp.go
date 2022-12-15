@@ -3,9 +3,9 @@ package model
 import (
 	"errors"
 
-	"github.com/cloud-barista/cb-ladybug/pkg/core/model/mcks"
-	"github.com/cloud-barista/cb-ladybug/pkg/utils/config"
-	"github.com/cloud-barista/cb-ladybug/pkg/utils/lang"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/core/model/mcks"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/utils/config"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/utils/lang"
 )
 
 type (
