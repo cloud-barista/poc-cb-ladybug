@@ -3,12 +3,13 @@ module github.com/cloud-barista/cb-ladybug
 go 1.16
 
 require (
-	github.com/beego/beego/v2 v2.0.1
+	github.com/beego/beego/v2 v2.0.2
 	github.com/chartmuseum/helm-push v0.10.1
 	github.com/cloud-barista/cb-store v0.4.1
 	github.com/go-resty/resty/v2 v2.6.0
 	github.com/google/uuid v1.3.0
 	github.com/labstack/echo/v4 v4.9.0
+	github.com/mattn/go-sqlite3 v2.0.3+incompatible // indirect
 	github.com/mittwald/go-helm-client v0.8.3-0.20211026133933-a26889186afc
 	github.com/sirupsen/logrus v1.8.1
 	github.com/swaggo/echo-swagger v1.1.4
