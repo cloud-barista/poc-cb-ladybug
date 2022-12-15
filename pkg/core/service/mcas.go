@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/cloud-barista/cb-ladybug/pkg/core/common"
-	"github.com/cloud-barista/cb-ladybug/pkg/core/model"
-	m "github.com/cloud-barista/cb-ladybug/pkg/core/model/mcks"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/core/common"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/core/model"
+	m "github.com/cloud-barista/poc-cb-ladybug/pkg/core/model/mcks"
 )
 
 func GetMcas(namespace string) (string, error) {

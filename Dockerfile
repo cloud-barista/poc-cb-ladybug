@@ -6,11 +6,11 @@ FROM golang:1.16.9-alpine AS builder
 
 RUN apk add --no-cache build-base
 
-ADD . /go/src/github.com/cloud-barista/cb-ladybug
+ADD . /go/src/github.com/cloud-barista/poc-cb-ladybug
 
-WORKDIR /go/src/github.com/cloud-barista/cb-ladybug
+WORKDIR /go/src/github.com/cloud-barista/poc-cb-ladybug
 
-#RUN go build -mod=mod -ldflags '-w -extldflags "-static"' -tags cb-ladybug -o cb-ladybug -v
+#RUN go build -mod=mod -ldflags '-w -extldflags "-static"' -tags poc-cb-ladybug -o poc-cb-ladybug -v
 RUN make
 
 #############################################################
@@ -24,9 +24,9 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 WORKDIR /app/src
 
-COPY --from=builder /go/src/github.com/cloud-barista/cb-ladybug/conf/ /app/conf/
+COPY --from=builder /go/src/github.com/cloud-barista/poc-cb-ladybug/conf/ /app/conf/
 
-COPY --from=builder /go/src/github.com/cloud-barista/cb-ladybug/cmd/cb-ladybug /app/cmd/
+COPY --from=builder /go/src/github.com/cloud-barista/poc-cb-ladybug/cmd/poc-cb-ladybug /app/cmd/
 
 #RUN /bin/bash -c "source /app/conf/setup.env"
 ENV CBSTORE_ROOT /app
@@ -54,6 +54,6 @@ ENV GOLANG_PROTOBUF_REGISTRATION_CONFLICT ignore
 # Swagger UI API document file path 
 #ENV API_DOC_PATH /app/api/rest/docs/swagger.json
 
-ENTRYPOINT [ "/app/cmd/cb-ladybug" ]
+ENTRYPOINT [ "/app/cmd/poc-cb-ladybug" ]
 
 EXPOSE 1592

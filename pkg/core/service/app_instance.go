@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cloud-barista/cb-ladybug/pkg/core/common"
-	"github.com/cloud-barista/cb-ladybug/pkg/core/model"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/core/common"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/core/model"
 	hc "github.com/mittwald/go-helm-client"
 )
 

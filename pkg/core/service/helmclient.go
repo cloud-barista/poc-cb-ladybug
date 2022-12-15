@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/cloud-barista/cb-ladybug/pkg/core/common"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/core/common"
 	hc "github.com/mittwald/go-helm-client"
 	"helm.sh/helm/v3/pkg/repo"
 )

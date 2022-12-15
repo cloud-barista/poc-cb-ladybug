@@ -3,13 +3,13 @@ package main
 import (
 	"sync"
 
-	restapi "github.com/cloud-barista/cb-ladybug/pkg/rest-api"
-	"github.com/cloud-barista/cb-ladybug/pkg/utils/config"
+	restapi "github.com/cloud-barista/poc-cb-ladybug/pkg/rest-api"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/utils/config"
 )
 
-// @title CB-Ladybug REST API
+// @title CB-Ladybug(POC) REST API
 // @version 0.1.0
-// @description CB-Ladybug REST API
+// @description CB-Ladybug(POC) REST API
 // @termsOfService http://swagger.io/terms/
 
 // @contact.name API Support
