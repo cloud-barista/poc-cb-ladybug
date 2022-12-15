@@ -1,4 +1,4 @@
-# CB-Ladybug :beetle:
+# CB-Ladybug (POC) :beetle:
 > Multi-Cloud Application Management Framework
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/cloud-barista/poc-cb-ladybug)](https://goreportcard.com/report/github.com/cloud-barista/poc-cb-ladybug)
@@ -12,7 +12,7 @@
 
 ```
 [NOTE]
-CB-Ladybug is currently under development. (the latest release is none) 
+CB-Ladybug (POC) is currently under development. (the latest release is none) 
 So, we do not recommend using the current release in production.
 Please note that the functionalities of CB-Ladybug are not stable and secure yet.
 If you have any difficulties in using CB-Ladybug, please let us know.
