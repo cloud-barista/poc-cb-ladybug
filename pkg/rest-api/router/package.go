@@ -3,8 +3,8 @@ package router
 import (
 	"net/http"
 
-	"github.com/cloud-barista/cb-ladybug/pkg/core/common"
-	"github.com/cloud-barista/cb-ladybug/pkg/core/service"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/core/common"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/core/service"
 	"github.com/labstack/echo/v4"
 )
 

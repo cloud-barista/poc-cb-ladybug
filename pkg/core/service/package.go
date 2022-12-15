@@ -4,9 +4,9 @@ import (
 	"io/ioutil"
 	"mime/multipart"
 
-	"github.com/cloud-barista/cb-ladybug/pkg/core/common"
-	"github.com/cloud-barista/cb-ladybug/pkg/core/model"
-	"github.com/cloud-barista/cb-ladybug/pkg/core/model/chartmuseum"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/core/common"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/core/model"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/core/model/chartmuseum"
 )
 
 func ListPackage(namespace string) (*model.PackageList, error) {

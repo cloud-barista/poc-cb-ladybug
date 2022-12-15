@@ -3,7 +3,7 @@ package router
 import (
 	"net/http"
 
-	"github.com/cloud-barista/cb-ladybug/pkg/core/common"
+	"github.com/cloud-barista/poc-cb-ladybug/pkg/core/common"
 	"github.com/labstack/echo/v4"
 )
 
@@ -18,5 +18,5 @@ import (
 // @Router /health [get]
 func Health(c echo.Context) error {
 	common.CBLog.Debugf("[CALLED]")
-	return c.String(http.StatusOK, "cloud-barista cb-ladybug is alived\n")
+	return c.String(http.StatusOK, "cloud-barista poc-cb-ladybug is alived\n")
 }
