@@ -3,7 +3,7 @@ module github.com/cloud-barista/poc-cb-ladybug
 go 1.19
 
 require (
-	github.com/beego/beego/v2 v2.0.2
+	github.com/beego/beego/v2 v2.0.4
 	github.com/chartmuseum/helm-push v0.10.3
 	github.com/cloud-barista/cb-store v0.4.1
 	github.com/go-resty/resty/v2 v2.6.0
